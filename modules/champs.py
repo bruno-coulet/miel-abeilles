@@ -5,6 +5,7 @@ champs = [['' for _ in range(1000)] for _ in range(1000)]
 
 # "ruche" aux coordonnées (500, 500)
 champs[500][500] = 'ruche'
+hive = champs[500][500]
 
 # Coordonnées des fleurs
 with open('data/fleurs.csv', newline='') as csvfile:
