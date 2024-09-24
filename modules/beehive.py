@@ -13,14 +13,18 @@ class Abeille:
         self.initial_position = (500,500)
         self.hive = (500,500)
 
-    def gathering(self, flowers_dict,):
+    def gathering(self):
         '''
             aditionne (x,y)       à (distance)
             ajoute chaque fleurs  à [path]
         '''
-        for flower_id, (x,y) in flowers_dict.items():
 
-            # Update the distance by adding the flower's coordinates
+        # Converti les éléments du dictionnaire en une liste
+        flowers_list = list(flowers_dict.items())
+        random.shuffle(flowers_list)
+
+
+        for flower_id, (x,y) in flowers_list:
             #  NOT CORRECT, HAS TO TAKE NEGATIVE VALUES IN ACCOUNT
             self.distance = (self.distance[0] + abs(x), self.distance[1] + abs(y))
             # Add the flower's ID to [path]
@@ -29,19 +33,17 @@ class Abeille:
             self.flowers_done.append(flower_id)
             
 
-        while sum(self.flowers_done) != 1275:
-            # continue à butiner
+        while len(self.flowers_done) < len(flowers_dict):
+            # Continue à butiner
             pass
 
-        else:
-            # retourne à hive (500,500)
-            pass
-        
-        return "\nToutes les fleurs on été butinées"
+        # Retourner à la ruche (500, 500) après avoir visité toutes les fleurs
+        return "\nToutes les fleurs ont été butinées"
+
 
 
 abeille = Abeille()
-gahtering_1 = abeille.gathering(flowers_dict)
+gahtering_1 = abeille.gathering()
 print(gahtering_1)
 
 print("\nTotal (x,y) de la distance parcourue:", abeille.distance)
