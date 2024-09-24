@@ -37,12 +37,12 @@ class Abeille:
             # retourne à hive (500,500)
             pass
         
-        return "Toutes les fleurs on été butinées"
+        return "\nToutes les fleurs on été butinées"
 
 
 abeille = Abeille()
 gahtering_1 = abeille.gathering(flowers_dict)
-print("Premier butinage:", gahtering_1)
+print(gahtering_1)
 
-print("Total de la distance parcourue:", abeille.distance)
-print("Fleurs butinée :", abeille.path)
+print("\nTotal (x,y) de la distance parcourue:", abeille.distance)
+print("\nListe des fleurs butinée :", abeille.path)
