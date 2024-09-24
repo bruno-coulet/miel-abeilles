@@ -7,7 +7,7 @@ __pycache__/
 env/
 
 # data
-# data/
+data/
 
 # Brouillon
 brouillons/
