@@ -1,4 +1,4 @@
-import random
+import random, math
 from champs import champs, hive
 from flowers_dict import flowers_dict 
 # différentes classes et fonctions
@@ -12,6 +12,9 @@ class Abeille:
         self.flowers_done = []
         self.initial_position = (500,500)
         self.hive = (500,500)
+
+    # def distance(x1, y1, x2, y2):
+    #     return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
     def gathering(self):
         '''
@@ -36,15 +39,16 @@ class Abeille:
         while len(self.flowers_done) < len(flowers_dict):
             # Continue à butiner
             pass
+        else:
+            # Retourner à la ruche (500, 500) après avoir visité toutes les fleurs
+            pass
 
-        # Retourner à la ruche (500, 500) après avoir visité toutes les fleurs
         return "\nToutes les fleurs ont été butinées"
 
 
 
 abeille = Abeille()
-gahtering_1 = abeille.gathering()
-print(gahtering_1)
 
+print(abeille.gathering())
 print("\nTotal (x,y) de la distance parcourue:", abeille.distance)
 print("\nListe des fleurs butinée :", abeille.path)
