@@ -36,12 +36,13 @@ class Abeille:
         else:
             # retourne à hive (500,500)
             pass
-
+        
+        return "Toutes les fleurs on été butinées"
 
 
 abeille = Abeille()
-final_position = abeille.gathering(flowers_dict)
-print("Final position:", final_position)
+gahtering_1 = abeille.gathering(flowers_dict)
+print("Premier butinage:", gahtering_1)
 
 print("Total de la distance parcourue:", abeille.distance)
 print("Fleurs butinée :", abeille.path)
