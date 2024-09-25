@@ -67,8 +67,9 @@ def shuffle_flowers_list():
 
 
 def distance_calcul_method(list):
-    for a,b in list
-    distance = math.sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2)
+    for a,b in list:
+    distance = round(math.sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2),2)
+    return distance
 
 def gathering_distance():
     
@@ -76,7 +77,7 @@ def gathering_distance():
     start = (500,500)
     for flowers in shuffle_flowers_list():
         #  NOT CORRECT, HAS TO TAKE NEGATIVE VALUES IN ACCOUNT
-        distance = (distance[0] + x, distance[1] + y)
+        a
     return distance
 
 
