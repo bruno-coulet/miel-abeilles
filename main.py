@@ -1,8 +1,5 @@
 
 import random, math
-from modules.champs import *
-from modules.champs import champs, hive
-from modules.flowers_dict import flowers_dict 
 #  simulation de l'adaptation des abeilles.
 
 def shuffle_flowers_list():
