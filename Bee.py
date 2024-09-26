@@ -53,11 +53,10 @@ class Bee():
             (875, 407),
             (761, 772),
             (276, 666)]
-        
-    
-    def shuffle_flowers_list(self):
+                # Mélanger la liste de fleurs lors de l'initialisation de chaque abeille
         random.shuffle(self.flowers_list)
-        return self.flowers_list
+    
+
 
     def distance_a_to_b(self ,a ,b):
         """Calculates the Euclidean distance between two points."""
@@ -70,7 +69,7 @@ class Bee():
         current_position = hive
         total_distance = 0
 
-        print (self.flowers_list)
+        # print (self.flowers_list)
         for flower in self.flowers_list:
             stage_distance = self.distance_a_to_b(current_position, flower)
             total_distance += stage_distance
@@ -89,11 +88,12 @@ class Bee():
         print(f"\n'gathering_path' ->  Les fleurs ont été butinées dans cet ordre : {path}")
         return path
     
-    def generation(self):
+    def one_bee_gathers(self):
         """Generates a random path for the bee's flower collection."""
         distance = self.gathering_distance()
         path = self.gathering_path()
 
-bee = Bee()
-# print (bee.distance_a_to_b())
-bee.generation()
+# bee = Bee()
+# bee.one_bee_gathers()
+# bee2 = Bee()
+# bee2.one_bee_gathers()
