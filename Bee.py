@@ -1,61 +1,30 @@
-import random, math
+import random, math, csv
 
 
-FLOWERS_LIST = [
-            (796, 310),
-            (774, 130),
-            (116, 69),
-            (908, 534),
-            (708, 99),
-            (444, 428),
-            (220, 307),
-            (501, 287),
-            (345, 560),
-            (628, 311),
-            (901, 639),
-            (436, 619),
-            (938, 646),
-            (45, 549),
-            (837, 787),
-            (328, 489),
-            (278, 434),
-            (704, 995),
-            (101, 482),
-            (921, 964),
-            (493, 970),
-            (494, 898),
-            (929, 389),
-            (730, 742),
-            (528, 794),
-            (371, 429),
-            (98, 711),
-            (724, 631),
-            (573, 903),
-            (964, 726),
-            (213, 639),
-            (549, 329),
-            (684, 273),
-            (273, 105),
-            (897, 324),
-            (508, 31),
-            (758, 405),
-            (862, 361),
-            (898, 898),
-            (2, 897),
-            (951, 209),
-            (189, 739),
-            (602, 68),
-            (437, 601),
-            (330, 410),
-            (3, 517),
-            (643, 404),
-            (875, 407),
-            (761, 772),
-            (276, 666)]
+
+def list_flowers():
+
+    flowers = []
+
+    with open('data/fleurs.csv', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        # Sauter l'en-tête du CSV s'il y en a un
+        next(reader)
+        # Pour chaque ligne, lire les coordonnées x, y
+        for row in reader:
+            x = int(row[0])
+            y = int(row[1])
+            # Ajouter les coordonnées sous forme de tuple dans la liste
+            flowers.append((x, y))
+
+    return flowers
+
+
+FLOWERS = list_flowers()
 
 class Bee():
     def __init__(self):
-        self.flowers_list = FLOWERS_LIST
+        self.flowers_list = FLOWERS.copy()
                 # Mélanger la liste de fleurs lors de l'initialisation de chaque abeille
         random.shuffle(self.flowers_list)
     
