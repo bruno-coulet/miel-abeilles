@@ -1,8 +1,7 @@
 import random, math
 
-class Bee():
-    def __init__(self):
-        self.flowers_list = [
+
+FLOWERS_LIST = [
             (796, 310),
             (774, 130),
             (116, 69),
@@ -53,10 +52,13 @@ class Bee():
             (875, 407),
             (761, 772),
             (276, 666)]
+
+class Bee():
+    def __init__(self):
+        self.flowers_list = FLOWERS_LIST
                 # Mélanger la liste de fleurs lors de l'initialisation de chaque abeille
         random.shuffle(self.flowers_list)
     
-
 
     def distance_a_to_b(self ,a ,b):
         """Calculates the Euclidean distance between two points."""
