@@ -1,7 +1,5 @@
 import random, math, csv
 
-
-
 def list_flowers():
 
     flowers = []
@@ -19,16 +17,16 @@ def list_flowers():
 
     return flowers
 
-
 FLOWERS = list_flowers()
 
 class Bee():
-    def __init__(self):
+    def __init__(self, bee_id, bee_path = []):
+        self.bee_id = bee_id
         self.flowers_list = FLOWERS.copy()
-                # Mélanger la liste de fleurs lors de l'initialisation de chaque abeille
+        self.path = bee_path
+        # Mélanger la liste de fleurs à l'initialisation de chaque abeille
         random.shuffle(self.flowers_list)
     
-
     def distance_a_to_b(self ,a ,b):
         """Calculates the Euclidean distance between two points."""
         stage_distance = round(math.sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2),2)
@@ -55,9 +53,9 @@ class Bee():
 
     def gathering_path(self):
         """Prints and returns the path of flower collection in order."""
-        path = self.flowers_list
-        print(f"\n'gathering_path' ->  Les fleurs ont été butinées dans cet ordre : {path}")
-        return path
+        self.path = self.flowers_list
+        print(f"\n'gathering_path' ->  Les fleurs ont été butinées dans cet ordre : {self.path}")
+        return self.path
     
     def one_bee_gathers(self):
         """Generates a random path for the bee's flower collection."""
