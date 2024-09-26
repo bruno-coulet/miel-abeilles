@@ -2,7 +2,7 @@
 import random, math
 #  simulation of bee adaptation.
 
-def shuffle_flowers_list():
+def shuffle_flowers_list() -> list:
     flowers_list = [
     (796, 310),
     (774, 130),
@@ -58,12 +58,12 @@ def shuffle_flowers_list():
     random.shuffle(flowers_list)
     return flowers_list
 
-def distance_a_to_b(a,b):
+def distance_a_to_b(a,b) -> float:
     """Calculates the Euclidean distance between two points."""
     stage_distance = round(math.sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2),2)
     return stage_distance
 
-def gathering_distance(flowers_list):
+def total_distance(flowers_list) -> float:
     """Calculates the total distance from the hive, through every shuffled flower,back to the hive."""
     hive = (500, 500)
     current_position = hive
@@ -78,27 +78,27 @@ def gathering_distance(flowers_list):
     total_distance += return_to_hive_distance
     total_distance = round(total_distance,2)
         
-    print(f"\n'gathering_distance'-> Distance totale parcourue : {total_distance}")
+    print(f"\n'total_distance'-> Distance totale parcourue : {total_distance}")
     return total_distance
 
-def gathering_path(flowers_list):
+def path(flowers_list)-> list[tuple[int, int]]:
     """Prints and returns the path of flower collection in order."""
     path = flowers_list[:]
-    print(f"\n'gathering_path' ->  Les fleurs ont été butinées dans cet ordre : {path}")
+    print(f"\n'path' ->  Les fleurs ont été butinées dans cet ordre : {path}")
     return path
     # ''' Add the flowers ID to [path]'''
     # path=[]
     # for flower in random_flowers_list:
     #     path.append(flower)
-    # print(f"\n'gathering_path' -> Les fleurs ont été butinées dans cet ordre : {path}")
+    # print(f"\n'path' -> Les fleurs ont été butinées dans cet ordre : {path}")
     # return path
 
 def generation():
     """Generates a random path for the bee's flower collection."""
     random_flowers_list = shuffle_flowers_list()
-    distance = gathering_distance(random_flowers_list)
-    path = gathering_path(random_flowers_list)
+    distance = total_distance(random_flowers_list)
+    this_path = path(random_flowers_list)
 
-# Running the generation simulation
+# Run the generation
 generation()
 
