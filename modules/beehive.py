@@ -6,11 +6,9 @@ from flowers_dict import flowers_dict
 
 class Bee:
     def __init__(self, path):
-        # self._distance = 0
-        # remplacé par la ligne suivante
-        # self._distance = self._compute_distance()
-        # remplacé par la ligne suivante
         self._id = id
+        # self._distance = 0                          deviens la ligne suivante
+        # self._distance = self._compute_distance()   deviens la ligne suivante
         self._compute_distance()
         self._path = path
         # self.flowers_done = []
@@ -35,7 +33,6 @@ class Beehive:
 
     def cross():
         pass
-
 
     def mutate():
         pass
