@@ -79,7 +79,7 @@ class Bee():
         total_distance += return_to_hive_distance
         total_distance = round(total_distance,2)
             
-        print(f"\n'gathering_distance'-> Distance totale parcourue : {total_distance}")
+        # print(f"\n'gathering_distance'-> Distance totale parcourue : {total_distance}")
         return total_distance
 
     def gathering_path(self):

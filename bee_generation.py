@@ -1,6 +1,7 @@
 from Bee import Bee
 
 GENERATION = 100
+CHOSEN_BEES = 20
 
 def generate_100_bees() -> list:
     bees = []
@@ -8,22 +9,23 @@ def generate_100_bees() -> list:
         bees.append(Bee())
     return bees
 
-# bees = generate_100_bees()
 
-def return_all_distances() -> list:
-    distance_list = []
+def distances_list() -> list:
+    distances_list = []
     for bee in generate_100_bees():
-        distance_list.append(bee.gathering_distance())
-    return distance_list
+        distances_list.append(bee.gathering_distance())
+    return distances_list
 
 def sort_distance_list() -> list:
-    distance_list = return_all_distances()
-    distance_list.sort()
-    return distance_list
+    sorted_distances_list = distances_list()
+    sorted_distances_list.sort()
+    return sorted_distances_list
 
-def choose_best_bees(rate):
-    distance_list = sort_distance_list()
-    return distance_list[0:rate]
+def best_bees(CHOSEN_BEES):
+    # distance_list = sort_distance_list()
+    # return distance_list[0:BEST_BEES]
+    best_bees = sort_distance_list()
+    return best_bees[0:CHOSEN_BEES]
     
 
 def return_all_paths() -> list:
@@ -32,7 +34,10 @@ def return_all_paths() -> list:
         path_list.append(bee.gathering_path())
     return path_list
 
+def best_paths(CHOSEN_BEES):
+    pass
 
 
 # print(sort_distance_list())
-print (choose_best_bees(20))
+print (f'\nLes {CHOSEN_BEES} meilleurs temps de parcours sont : {best_bees(CHOSEN_BEES)}')
+# print (return_all_paths())
