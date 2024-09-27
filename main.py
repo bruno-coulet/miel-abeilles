@@ -15,6 +15,7 @@ def generate_bees() -> list:
         for i in range(POPULATION):
             generated_bees.append(Bee(i))
     return generated_bees
+print(generate_bees())
 
 def distances_and_bees() -> list [float, int]:
     ''' processes the distance each bee travels '''
@@ -23,7 +24,6 @@ def distances_and_bees() -> list [float, int]:
         distances_and_bees.append((bee.total_distance(), bee))
     return distances_and_bees
 # print(distances_and_bees())
-
 
 def sort_distance_list() -> list:
     ''' sorts the distances_and_bees list
@@ -38,20 +38,12 @@ def selected_bees(SELECTION) -> list:
     selected_bees = sort_distance_list()
     return selected_bees[0:SELECTION]
 
-# def paths() -> list:
-#     path_list = []
-#     for bee in generate_bees():
-#         path_list.append((bee.gathering_path()))
-#     return path_list
-# # print("Chemins de chacunes des ",POPULATION," abeilles",paths())
-
-
 def best_paths(SELECTION) -> list:
     ''' lists the paths of the best bees '''
     best_paths = []
     chosen_bees = selected_bees(SELECTION)
     for distance, bee in chosen_bees:
-        best_paths.append(bee.gathering_path())
+        best_paths.append((bee.gathering_path(), bee.bee_id))
     return best_paths
 
 
@@ -61,7 +53,7 @@ print()
 print("Selection : ",SELECTION," abeilles")
 print()
 
-# Trier les abeilles par distance
+
 print(f"\nLes {SELECTION} meilleures abeilles et leurs distances :\n")
 for distance, bee in selected_bees(SELECTION):
     print(f"Abeille {bee.bee_id} avec une distance de {distance}")
@@ -69,6 +61,6 @@ print()
 # print(f"\nLes {SELECTION} meilleurs abeilles et leur distances :\n{[(bee.bee_id, distance) for distance, bee in selected_bees(SELECTION)]}")
 
 
-# les meilleurs chemins
-print(f"Chemins des {SELECTION} meilleures abeilles :\n\n {best_paths(SELECTION)}")
+# best paths
+print(f"Chemins des {SELECTION} meilleures abeilles :\n\n {best_paths(SELECTION)}\n")
 
