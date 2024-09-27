@@ -47,20 +47,20 @@ def best_paths(SELECTION) -> list:
     return best_paths
 
 
-print()
-print("Population : ",POPULATION," abeilles")
-print()
-print("Selection : ",SELECTION," abeilles")
-print()
 
 
-print(f"\nLes {SELECTION} meilleures abeilles et leurs distances :\n")
-for distance, bee in selected_bees(SELECTION):
-    print(f"Abeille {bee.bee_id} avec une distance de {distance}")
-print()
-# print(f"\nLes {SELECTION} meilleurs abeilles et leur distances :\n{[(bee.bee_id, distance) for distance, bee in selected_bees(SELECTION)]}")
 
 
-# best paths
-print(f"Chemins des {SELECTION} meilleures abeilles :\n\n {best_paths(SELECTION)}\n")
+
+if __name__ == "__main__":
+
+    print("\nPopulation : ",POPULATION," abeilles\n")
+    print("Selection : ",SELECTION," abeilles\n")
+    print(f"\nLes {SELECTION} meilleures abeilles et leurs distances :\n")
+    for distance, bee in selected_bees(SELECTION):
+        print(f"Abeille {bee.bee_id} avec une distance de {distance}")
+    print()
+    # print(f"\nLes {SELECTION} meilleurs abeilles et leur distances :\n{[(bee.bee_id, distance) for distance, bee in selected_bees(SELECTION)]}")
+
+    print(f"Chemins des {SELECTION} meilleures abeilles :\n\n {best_paths(SELECTION)}\n")
 

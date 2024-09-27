@@ -6,16 +6,15 @@ def list_flowers():
 
     with open('data/fleurs.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
-        # Sauter l'en-tête du CSV s'il y en a un
+        # skips the header
         next(reader)
-        # Pour chaque ligne, lire les coordonnées x, y
+        # adds the coordinates tuple in the flowers list
         for row in reader:
             x = int(row[0])
             y = int(row[1])
-            # Ajouter les coordonnées sous forme de tuple dans la liste
             flowers.append((x, y))
-
     return flowers
+
 
 FLOWERS = list_flowers()
 
@@ -24,7 +23,6 @@ class Bee():
         self.bee_id = bee_id
         self.flowers_list = FLOWERS.copy()
         self.path = bee_path
-        # Mélanger la liste de fleurs à l'initialisation de chaque abeille
         random.shuffle(self.flowers_list)
     
     def distance_a_to_b(self ,a ,b):
@@ -56,15 +54,6 @@ class Bee():
         # print(f"\ngathering_path : {self.path}")
         return self.path
     
-    # def one_bee_gathers(self):
-    #     """Generates a random path for the bee's flower collection."""
-    #     distance = self.total_distance()
-    #     path = self.gathering_path()
 
 
 
-
-# bee = Bee()
-# bee.one_bee_gathers()
-# bee2 = Bee()
-# bee2.one_bee_gathers()
