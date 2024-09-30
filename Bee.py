@@ -52,7 +52,6 @@ generated_bees = []
 def generate_bees(POPULATION_SIZE) -> list[Bee]:
     ''' generates as many bees as defined in POPULATION '''
     generated_bees.extend([Bee(i) for i in range(POPULATION_SIZE)])
-    print("\nPopulation : ",POPULATION_SIZE," abeilles")
     # POPULATION_SIZE -= REJECTION
     return generated_bees
 
@@ -64,7 +63,7 @@ def sorted_distances() -> list[tuple[float, Bee]]:
     distances_and_bees = [(bee.total_distance(), bee) for bee in generate_bees(POPULATION_SIZE)]
     sorted_distances = sorted(distances_and_bees, key=lambda x: x[0])
     return sorted_distances
-print(sorted_distances()) 
+# print(sorted_distances()) 
 
 sorted_bees = sorted_distances()
 
