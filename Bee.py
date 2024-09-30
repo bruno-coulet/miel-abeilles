@@ -49,23 +49,19 @@ generated_bees = []
 #---------------------First Generation---------------------------------
 
 
-def generate_bees() -> list[Bee]:
+def generate_bees(POPULATION_SIZE) -> list[Bee]:
     ''' generates as many bees as defined in POPULATION '''
-    # Avoid creating a new list of bees if there is one already
-    if generated_bees:
-        return generated_bees
-    # Creates a list of bees if there is none, Use .extend instead of .append to add Bees to the list
-    else:
-        generated_bees.extend([Bee(i) for i in range(POPULATION_SIZE)])
-        print("\nPopulation : ",POPULATION_SIZE," abeilles")
-        return generated_bees
+    generated_bees.extend([Bee(i) for i in range(POPULATION_SIZE)])
+    print("\nPopulation : ",POPULATION_SIZE," abeilles")
+    # POPULATION_SIZE -= REJECTION
+    return generated_bees
 
-# print(generate_bees())
+# print(generate_bees(POPULATION_SIZE))
 
 def sorted_distances() -> list[tuple[float, Bee]]:
     ''' sorts the distances_and_bees list
     shortest distance first, longest distance last'''
-    distances_and_bees = [(bee.total_distance(), bee) for bee in generate_bees()]
+    distances_and_bees = [(bee.total_distance(), bee) for bee in generate_bees(POPULATION_SIZE)]
     sorted_distances = sorted(distances_and_bees, key=lambda x: x[0])
     return sorted_distances
 print(sorted_distances()) 
