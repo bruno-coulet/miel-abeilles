@@ -42,7 +42,6 @@ class Bee():
 
 #------------------------------------------------------
 
-
 memorized_paths = []
 generated_bees = []
 
@@ -54,30 +53,35 @@ def generate_bees(POPULATION_SIZE) -> list[Bee]:
     generated_bees.extend([Bee(i) for i in range(POPULATION_SIZE)])
     # POPULATION_SIZE -= REJECTION
     return generated_bees
-
 # print(generate_bees(POPULATION_SIZE))
 
+
 def sorted_distances() -> list[tuple[float, Bee]]:
-    ''' sorts the distances_and_bees list
-    shortest distance first, longest distance last'''
-    distances_and_bees = [(bee.total_distance(), bee) for bee in generate_bees(POPULATION_SIZE)]
-    sorted_distances = sorted(distances_and_bees, key=lambda x: x[0])
-    return sorted_distances
-# print(sorted_distances()) 
+    """tuples (distance, bee), sorted by the distance."""
+    distances_with_bees = [(bee.total_distance(), bee) for bee in generate_bees(POPULATION_SIZE)]
+    return sorted(distances_with_bees, key=lambda x: x[0])
+# print(sorted_distances())
+
+
 
 sorted_bees = sorted_distances()
 
-def selected_bees(SELECTION) -> list[tuple[float, Bee]]:
-    return sorted_bees[:SELECTION]
 
-def rejected_bees(REJECTION) -> list[tuple[float, Bee]]:
-    return sorted_bees[-REJECTION:]
+
+
+def selected_bees(SELECTION) -> list[Bee]:
+    sorted_bee_distances = sorted_distances() 
+    return [bee for _, bee in sorted_bee_distances[:SELECTION]]
+
+def rejected_bees(REJECTION) -> list[Bee]:
+    rejected_bee_distances = sorted_distances()
+    return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
 
 def selected_paths(SELECTION) -> list[Bee]:
     ''' lists the paths of the best bees '''
     selected_paths = []
     chosen_bees = selected_bees(SELECTION)
-    for distance, bee in chosen_bees:
+    for bee in chosen_bees:
         selected_paths.append(bee)
         memorized_paths.append(bee.gathering_path())
     return selected_paths
