@@ -1,5 +1,5 @@
 import random, math, csv
-from constants import FLOWERS, POPULATION_SIZE, SELECTION
+from constants import FLOWERS, POPULATION_SIZE, SELECTION, REJECTION
 
 class Bee():
     def __init__(self, bee_id, bee_path = []):
@@ -8,12 +8,12 @@ class Bee():
         self.path = bee_path
         random.shuffle(self.flowers_list)
     
-    def distance_a_to_b(self ,a ,b):
+    def distance_a_to_b(self ,a ,b) -> float:
         """Calculates the Euclidean distance between two points."""
         stage_distance = round(math.sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2),2)
         return stage_distance
 
-    def total_distance(self):
+    def total_distance(self) -> float:
         """Calculates the total distance from the hive, through every shuffled flower,back to the hive."""
         hive = (500, 500)
         current_position = hive
@@ -31,46 +31,39 @@ class Bee():
         # print(f"\n'total_distance'-> Distance totale parcourue : {total_distance}")
         return total_distance
 
-    def gathering_path(self):
+    def gathering_path(self) -> list[(int, int)]:
         """ Returns the path of flower collection """
         self.path = self.flowers_list
         return self.path
     
-    def __repr__(self):
-        return f"Bee({self.bee_id}, path={self.gathering_path()})"
+    # Dispays bee's informations when the objet is printed
+    def __repr__(self) -> str:
+        return f"Bee id : {self.bee_id}, \nBee path : {self.gathering_path()}\n"
+
+
 
 generated_bees = []
 
-def generate_bees() -> list:
+def generate_bees() -> list[Bee]:
     ''' generates as many bees as defined in POPULATION '''
     # Avoid creating a new list of bees if there is one already
     if generated_bees:
         return generated_bees
-    # Creates a list of bees if there is none
+    # Creates a list of bees if there is none, Use .extend instead of .append to add Bees to the list
     else:
-        # for i in range(POPULATION_SIZE):
-        #     generated_bees.append(Bee(i))
-
-        # Use extend or list comprehension to add Bees to the list
         generated_bees.extend([Bee(i) for i in range(POPULATION_SIZE)])
         return generated_bees
-
-        # return [Bee(i) for i in range(POPULATION_SIZE)]
 # print(generate_bees())
 
-def sort_distance_list() -> list:
+def sorted_distances() -> list[tuple[float, Bee]]:
     ''' sorts the distances_and_bees list
     shortest distance first, longest distance last'''
-    # sorted_distances = generate_bees().sort()
-    # # return sorted_distances
-
-# print(sort_distance_list())
-
     distances_and_bees = [(bee.total_distance(), bee) for bee in generate_bees()]
-    sorted_distances = sorted(distances_and_bees, key=lambda x: x[0])  # Trie par la distance (x[0])
-    
+    sorted_distances = sorted(distances_and_bees, key=lambda x: x[0])
+# print(sorted_distances())    
     return sorted_distances
 
+sorted_bees = sorted_distances()
 
 
 def best_paths(SELECTION) -> list:
@@ -82,20 +75,30 @@ def best_paths(SELECTION) -> list:
         best_paths.append(bee)
     return best_paths
 
-def worst_path():
-    pass
 
-def selected_bees(SELECTION) -> list:
+# def worst_paths(REJECTION: int) -> list:
+#     ''' lists the paths of the worst bees '''
+#     worst_paths = []
+#     rejected_bees_list = rejected_bees(REJECTION)
+#     for distance, bee in rejected_bees_list:
+#         worst_paths.append(bee)
+#     return worst_paths
+
+
+
+def selected_bees(SELECTION: int) -> list:
     ''' slices the distances_and_bees list according to SELECTION '''
-    best_bees = sort_distance_list()
-    return best_bees[:SELECTION]
+    return sorted_bees[:SELECTION]
 
 
-
-def rejected_bees(SELECTION) -> list:
+def rejected_bees(REJECTION: int) -> list:
     ''' slices the distances_and_bees list according to SELECTION '''
-    rejected_bees = sort_distance_list()
-    return rejected_bees[(len(sort_distance_list())-SELECTION):-1]
+    return sorted_bees[-REJECTION:]
+
+
+
+
+
 
 
 # On a :
