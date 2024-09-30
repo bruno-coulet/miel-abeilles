@@ -37,9 +37,11 @@ class Bee():
         self.path = self.flowers_list
         return self.path
     
-    # Dispays bee's informations when the objet is printed
     def __repr__(self) -> str:
         return f"Bee id : {self.bee_id}, \nBee path : {self.gathering_path()}\n"
+
+#------------------------------------------------------
+
 
 memorized_paths = []
 generated_bees = []
@@ -55,7 +57,9 @@ def generate_bees() -> list[Bee]:
     # Creates a list of bees if there is none, Use .extend instead of .append to add Bees to the list
     else:
         generated_bees.extend([Bee(i) for i in range(POPULATION_SIZE)])
+        print("\nPopulation : ",POPULATION_SIZE," abeilles")
         return generated_bees
+
 # print(generate_bees())
 
 def sorted_distances() -> list[tuple[float, Bee]]:
@@ -64,7 +68,7 @@ def sorted_distances() -> list[tuple[float, Bee]]:
     distances_and_bees = [(bee.total_distance(), bee) for bee in generate_bees()]
     sorted_distances = sorted(distances_and_bees, key=lambda x: x[0])
     return sorted_distances
-# print(sorted_distances()) 
+print(sorted_distances()) 
 
 sorted_bees = sorted_distances()
 
@@ -100,23 +104,13 @@ def modify_first_to_last(selected_bees: list[Bee]) -> list[Bee]:
     return modified_bees  # Return the modified bees
 
 
-# On a :
-# les meilleurs trajet
-# les pires trajets
+# ------------------------Second generation----------------------------------------
+
+# Ne pas changer les 50 meilleurs abeilles
+# la 51eme prend le chemin de la première et swape la 1ère et la dernière fleur
+# la 52eme prend le chemin de la 2ère et swape la 1ère et la dernière fleur
+#  etc...
 
 
-def cross():
-    # Mélanger les meilleurs trajets
-    pass
-
-def mutate():
-    # objectif : tester différent chemin et les compare
-    # assigne les trajets mélangé aux abeilles disponibles 
-    pass
-
-
-# ? ? ? 
-def reproduce():
-    pass
 
 
