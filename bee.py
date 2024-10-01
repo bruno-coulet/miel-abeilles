@@ -40,55 +40,50 @@ class Bee():
     def __repr__(self) -> str:
         return f"Bee id : {self.bee_id}, \nBee path : {self.gathering_path()}\n"
 
-#------------------------------------------------------
 
-memorized_paths = []
-generated_bees = []
 
 #---------------------First Generation---------------------------------
 class Beehive:
-    def __init__(self, population_size, selected=[], modified=[]):
+    def __init__(self, population_size):
         self.population_size = population_size
-        self.selected = selected
-        self.modified = modified
+        self.selected = []
+        self.modified = []
         self.generated_bees = []
         self.memorized_paths = []
+        self.sorted_bees_list = self.sorted_bees()
 
     def generate_bees(self):
         '''Generates as many bees as defined in population_size'''
         self.generated_bees = [Bee(i) for i in range(self.population_size)]
         return self.generated_bees
 
-
-    def sorted_distances(self) -> list[tuple[float, Bee]]:
-        """Tuples (distance, bee), sorted by the distance."""
+    def sorted_bees(self) -> list[tuple[float, Bee]]:
+        """Tuples (distance, bee object), sorted by the distance."""
         if not self.generated_bees:
-            self.generate_bees()  # Ensure bees are generated
+            self.generate_bees()
         distances_with_bees = [(bee.total_distance(), bee) for bee in self.generated_bees]
         return sorted(distances_with_bees, key=lambda x: x[0])
-    # print(sorted_distances())
-
-
-    self.sorted_bees = sorted_distances()
+    # print(sorted_bees())
 
 
 
-
-    def selected_bees(SELECTION) -> list[Bee]:
-        sorted_bee_distances = self.sorted_distances() 
+    def selected_bees(self) -> list[Bee]:
+        sorted_bee_distances = self.sorted_bees()
         return [bee for _, bee in sorted_bee_distances[:SELECTION]]
 
-    def rejected_bees(REJECTION) -> list[Bee]:
-        rejected_bee_distances = sorted_distances()
+    def rejected_bees(self) -> list[Bee]:
+        rejected_bee_distances = self.sorted_bees()
         return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
+    
+    
 
-    def selected_paths(SELECTION) -> list[Bee]:
+    def selected_paths(self) -> list[Bee]:
         ''' lists the paths of the best bees '''
         selected_paths = []
-        chosen_bees = selected_bees(SELECTION)
+        chosen_bees = self.selected_bees()
         for bee in chosen_bees:
             selected_paths.append(bee)
-            memorized_paths.append(bee.gathering_path())
+            self.memorized_paths.append(bee.gathering_path())
         return selected_paths
     # print("\nselected_paths (liste d'objets bee):\n\n", selected_paths(SELECTION))
 

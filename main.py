@@ -1,4 +1,4 @@
-from bee import Bee, selected_bees, selected_paths, rejected_bees, memorized_paths, modify_first_to_last
+from bee import Bee, Beehive
 from constants import FLOWERS, POPULATION_SIZE, SELECTION, REJECTION, INTERLIGNE
 
 def main():
@@ -6,24 +6,36 @@ def main():
     print("-" * 36, "main.py", "-" * 36)
     print(INTERLIGNE)
 
+    beehive = Beehive(POPULATION_SIZE)
+
     print("\nPopulation : ", POPULATION_SIZE, " abeilles")
     print("Selection  : ", SELECTION, " abeilles\n")
 
     print(INTERLIGNE)
 
+    beehive.generate_bees()
+
     print(f"\nLes {SELECTION} meilleures abeilles et leurs distances :")
-    for bee in selected_bees(SELECTION):
+    # Get selected bees
+    selected_bees = beehive.selected_bees()
+    for bee in selected_bees:
         print(f"L'abeille {bee.bee_id} a parcourue une distance de {bee.total_distance()}\n")
 
+
     print(INTERLIGNE)
+
 
     print(f"\nChemins des {SELECTION} meilleures abeilles :\n")
-    for bee in selected_paths(SELECTION):
+    # Get paths of the selected bees
+    selected_paths = beehive.selected_paths()
+    for bee in selected_paths:
         print(f"Abeille {bee.bee_id},\n chemin : {bee.gathering_path()}\n")
+
 
     print(INTERLIGNE)
 
-    modified_bees = modify_first_to_last(selected_paths(SELECTION))
+    # Modify the paths by swapping the first and last flower
+    modified_bees = beehive.modify_first_to_last(selected_paths)
     print("\nOriginal paths:\n", [bee.gathering_path() for bee in modified_bees])
     print("\nModified paths:\n", [bee.modified_path for bee in modified_bees])
 
