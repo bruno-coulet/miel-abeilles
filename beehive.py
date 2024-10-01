@@ -2,9 +2,10 @@ import random, math
 from constants import FLOWERS, POPULATION_SIZE, SELECTION, REJECTION
 
 class Bee():
-    def __init__(self, bee_id, bee_path = [], modified_path = []):
+    def __init__(self, bee_id, bee_distance = 0, bee_path = [], modified_path = []):
         self.bee_id = bee_id
         self.flowers_list = FLOWERS.copy()
+        self.distance = bee_distance
         self.path = bee_path
         self.modified_path = modified_path
         random.shuffle(self.flowers_list)
@@ -39,7 +40,6 @@ class Bee():
     
     def __repr__(self) -> str:
         return f"Bee id : {self.bee_id}, \nBee path : {self.gathering_path()}\n"
-
 
 
 #---------------------First Generation---------------------------------
@@ -90,8 +90,9 @@ class Beehive:
             path[0], path[-1] = path[-1], path[0]
             # Assign modified path to the bee
             bee.modified_path = path
+            modified_distance = bee.total_distance()
             modified_bees.append(bee)
-        return modified_bees
+        return modified_bees, modified_distance
 
     def generate_random_positions(self):
         random_positions = []
