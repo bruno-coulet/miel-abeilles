@@ -46,11 +46,8 @@ class Bee():
 class Beehive:
     def __init__(self, population_size):
         self.population_size = population_size
-        self.selected = []
-        self.modified = []
         self.generated_bees = []
         self.memorized_paths = []
-        self.sorted_bees_list = self.sorted_bees()
 
     def generate_bees(self):
         '''Generates as many bees as defined in population_size'''
@@ -65,8 +62,6 @@ class Beehive:
         return sorted(distances_with_bees, key=lambda x: x[0])
     # print(sorted_bees())
 
-
-
     def selected_bees(self) -> list[Bee]:
         sorted_bee_distances = self.sorted_bees()
         return [bee for _, bee in sorted_bee_distances[:SELECTION]]
@@ -75,8 +70,6 @@ class Beehive:
         rejected_bee_distances = self.sorted_bees()
         return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
     
-    
-
     def selected_paths(self) -> list[Bee]:
         ''' lists the paths of the best bees '''
         selected_paths = []
@@ -90,7 +83,6 @@ class Beehive:
 
 
     #-----------------------Modifications--------------------------------------------
-
 
     def modify_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
         modified_bees = []
