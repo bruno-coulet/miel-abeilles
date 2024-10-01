@@ -24,9 +24,9 @@ def main():
         print(INTERLIGNE)
 
 
-    for i in range(GENERATION_COUNT):
-        pass
-
+    # for i in range(GENERATION_COUNT):
+        
+    beehive.cross_bees()
 
         # print("\nOriginal paths:\n", [bee.gathering_path() for bee in modified_bees])
         # print("\nModified paths:\n", [bee.modified_path for bee in modified_bees])

@@ -51,6 +51,7 @@ class Beehive:
         self.population_size = population_size
         self.generate_bees()
         self.memorized_paths = []
+        # self.cross_bees()
 
     def generate_bees(self):
         '''Generates as many bees as defined in population_size'''
@@ -71,9 +72,9 @@ class Beehive:
         sorted_bee_distances = self.sorted_bees()
         return [bee for _, bee in sorted_bee_distances[:SELECTION]]
 
-    def rejected_bees(self) -> list[Bee]:
-        rejected_bee_distances = self.sorted_bees()
-        return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
+    # def rejected_bees(self) -> list[Bee]:
+    #     rejected_bee_distances = self.sorted_bees()
+    #     return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
     
     
 
@@ -89,19 +90,47 @@ class Beehive:
 
 
 
+    #-----------------------Cross over--------------------------------------------
+
+    def cross_bees(self):
+        # for bee in range(SELECTION):
+        # for bee in self.selected_bee:
+    
+        parent_1_half_1 = self.memorized_paths[0][0:25]
+        parent_2_half_2 = self.memorized_paths[1][25:-1]
+
+        child_1 = Bee(POPULATION_SIZE//2+1)
+        child_1 = [parent_1_half_1 + parent_2_half_2]
+        print("child_1 : ",child_1)
+        print()
+
+
+        parent_1_half_2 = self.memorized_paths[0][25:-1]
+        parent_2_half_1 = self.memorized_paths[1][0:25]
+
+        child_2 = Bee(POPULATION_SIZE//2+2)
+        child_2 = [parent_1_half_2 + parent_2_half_1]
+        print("child_2 : ",child_2)
+
+        bee = Bee(self)
+        new_distance = bee.total_distance()
+        print(new_distance)
+
+
+
     #-----------------------Modifications--------------------------------------------
 
 
-    def mutate_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
-        modified_bees = []
-        for bee in selected_bees:
-            # creates a shallow copy of the path
-            path = bee.gathering_path()[:]
-            path[0], path[-1] = path[-1], path[0]
-            # Assign modified path to the bee
-            bee.modified_path = path
-            modified_bees.append(bee)
-        return modified_bees
+    # def mutate_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
+    #     modified_bees = []
+    #     for bee in selected_bees:
+    #         # creates a shallow copy of the path
+    #         path = bee.gathering_path()[:]
+    #         path[0], path[-1] = path[-1], path[0]
+    #         # Assign modified path to the bee
+    #         bee.modified_path = path
+    #         modified_bees.append(bee)
+    #     return modified_bees
 
 
 # ------------------------Second generation----------------------------------------
