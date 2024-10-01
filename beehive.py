@@ -60,7 +60,6 @@ class Beehive:
             self.generate_bees()
         distances_with_bees = [(bee.total_distance(), bee) for bee in self.generated_bees]
         return sorted(distances_with_bees, key=lambda x: x[0])
-    # print(sorted_bees())
 
     def selected_bees(self) -> list[Bee]:
         sorted_bee_distances = self.sorted_bees()
@@ -78,13 +77,12 @@ class Beehive:
             selected_paths.append(bee)
             self.memorized_paths.append(bee.gathering_path())
         return selected_paths
-    # print("\nselected_paths (liste d'objets bee):\n\n", selected_paths(SELECTION))
 
 
 
     #-----------------------Modifications--------------------------------------------
 
-    def modify_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
+    def mutation_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
         modified_bees = []
         for bee in selected_bees:
             # creates a shallow copy of the path
