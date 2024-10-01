@@ -17,7 +17,6 @@ def main():
         print(f"L'abeille {bee.bee_id} a parcourue une distance de {bee.total_distance()}\n")
 
     print(INTERLIGNE)
-
     print(f"\nChemins des {SELECTION} meilleures abeilles :\n")
 
     for bee in beehive.selected_paths():
@@ -27,10 +26,13 @@ def main():
     print("-" * 37, "mutation", "-" * 37)
 
 
-    modified_bees = beehive.mutation_first_to_last(beehive.selected_paths())
+    first_to_last = beehive.mutation_first_to_last(beehive.selected_paths())
+    print("\nOriginal paths:\n", [bee.gathering_path() for bee in first_to_last])
+    print("\nmutation_first_to_last() Modified paths:\n", [bee.modified_path for bee in first_to_last])
 
-    print("\nOriginal paths:\n", [bee.gathering_path() for bee in modified_bees])
-    print("\nModified paths:\n", [bee.modified_path for bee in modified_bees])
+    random_position = beehive.mutation_random_positions(beehive.selected_paths())
+    print("\nOriginal paths:\n", [bee.gathering_path() for bee in first_to_last])
+    print("\nmutation_random_position)() Modified paths:\n", [bee.modified_path for bee in first_to_last])
 
 if __name__ == "__main__":
     main()
