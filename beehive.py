@@ -66,8 +66,6 @@ class Beehive:
         return sorted(distances_with_bees, key=lambda x: x[0])
     # print(sorted_bees())
 
-
-
     def selected_bees(self) -> list[Bee]:
         sorted_bee_distances = self.sorted_bees()
         return [bee for _, bee in sorted_bee_distances[:SELECTION]]
@@ -76,8 +74,6 @@ class Beehive:
     #     rejected_bee_distances = self.sorted_bees()
     #     return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
     
-    
-
     def selected_paths(self) -> list[Bee]:
         ''' lists the paths of the best bees '''
         selected_paths = []
@@ -96,25 +92,32 @@ class Beehive:
         # for bee in range(SELECTION):
         # for bee in self.selected_bee:
     
-        parent_1_half_1 = self.memorized_paths[0][0:25]
-        parent_2_half_2 = self.memorized_paths[1][25:-1]
-
         child_1 = Bee(POPULATION_SIZE//2+1)
-        child_1 = [parent_1_half_1 + parent_2_half_2]
-        print("child_1 : ",child_1)
+
+        # parent_1_half_1 = self.memorized_paths[0][0:25]
+        # parent_2_half_2 = self.memorized_paths[1][25:-1]
+        parent_1_half_1 = self.memorized_paths[0][0:3]
+        parent_2_half_2 = self.memorized_paths[1][3:]
+        child_1.bee_path = [parent_1_half_1 + parent_2_half_2]
+
+        print("child_1 id : ",child_1.bee_id, "\n",\
+        "child_1 path : ",child_1.bee_path,"\n",\
+        "child_1 distance : ",child_1.total_distance())
+        # print("child_1 : ",child_1)
+        # print(f"L'abeille {child_1.bee_id} a parcourue une distance de {child_1.total_distance()}\n")
         print()
-
-
-        parent_1_half_2 = self.memorized_paths[0][25:-1]
-        parent_2_half_1 = self.memorized_paths[1][0:25]
+        
 
         child_2 = Bee(POPULATION_SIZE//2+2)
-        child_2 = [parent_1_half_2 + parent_2_half_1]
-        print("child_2 : ",child_2)
+        print("child_2 id : ",child_2.bee_id)
+        parent_1_half_2 = self.memorized_paths[0][25:-1]
+        parent_2_half_1 = self.memorized_paths[1][0:25]
+        child_2.bee_path = [parent_1_half_2 + parent_2_half_1]
+  
 
-        bee = Bee(self)
-        new_distance = bee.total_distance()
-        print(new_distance)
+        # bee = Bee(self)
+        # new_distance = bee.total_distance()
+        # print(new_distance)
 
 
 

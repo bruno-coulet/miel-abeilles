@@ -3,7 +3,7 @@ import csv
 def list_flowers():
     flowers = []
 
-    with open('data/fleurs.csv', newline='') as csvfile:
+    with open('data/mini_fleurs.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         # skips the header
         next(reader)
