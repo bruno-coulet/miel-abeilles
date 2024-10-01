@@ -14,8 +14,9 @@ def list_flowers():
             flowers.append((x, y))
     return flowers
 
+GENERATION_COUNT = 10
 FLOWERS = list_flowers()
-POPULATION_SIZE = 6
-SELECTION = 1
-REJECTION = 1
+POPULATION_SIZE = 4
+SELECTION = 2
+REJECTION = 2
 INTERLIGNE = "-"*80
