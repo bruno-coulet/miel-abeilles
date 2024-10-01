@@ -80,14 +80,22 @@ class Beehive:
 
 
 
-    #-----------------------Modifications--------------------------------------------
+    #-----------------------Mutation--------------------------------------------
 
-    def mutation_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
+    def generate_random_positions(self):
+        random_positions = []
+        for i in range(2):
+            r = random.randint(1,len(self.memorized_paths[0]))
+            random_positions.append(r)
+        return random_positions
+
+    def mutation_random_positions(self, selected_bees: list[Bee]) -> list[Bee]:
         modified_bees = []
+        position = self.generate_random_positions()
         for bee in selected_bees:
             # creates a shallow copy of the path
             path = bee.gathering_path()[:]
-            path[0], path[-1] = path[-1], path[0]
+            path[position[0]], path[position[1]] = path[position[1]], path[position[0]]
             # Assign modified path to the bee
             bee.modified_path = path
             modified_bees.append(bee)
@@ -100,7 +108,4 @@ class Beehive:
 # la 51eme prend le chemin de la première et swape la 1ère et la dernière fleur
 # la 52eme prend le chemin de la 2ère et swape la 1ère et la dernière fleur
 #  etc...
-
-
-
 

@@ -27,7 +27,7 @@ def main():
     print("-" * 37, "mutation", "-" * 37)
 
 
-    modified_bees = beehive.mutation_first_to_last(beehive.selected_paths())
+    modified_bees = beehive.mutation_random_positions(beehive.selected_paths())
 
     print("\nOriginal paths:\n", [bee.gathering_path() for bee in modified_bees])
     print("\nModified paths:\n", [bee.modified_path for bee in modified_bees])
