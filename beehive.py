@@ -2,12 +2,14 @@ import random, math
 from constants import FLOWERS, POPULATION_SIZE, SELECTION, REJECTION
 
 class Bee():
-    def __init__(self, bee_id, bee_path = [], modified_path = []):
+
+    def __init__(self, bee_id, bee_distance = 0, bee_path = [], modified_path = []):
         self.bee_id = bee_id
         self.flowers_list = FLOWERS.copy()
+        random.shuffle(self.flowers_list)
+        self.distance = bee_distance
         self.path = bee_path
         self.modified_path = modified_path
-        random.shuffle(self.flowers_list)
     
     def distance_a_to_b(self ,a ,b) -> float:
         """Calculates the Euclidean distance between two points."""
@@ -44,13 +46,11 @@ class Bee():
 
 #---------------------First Generation---------------------------------
 class Beehive:
+
     def __init__(self, population_size):
         self.population_size = population_size
-        self.selected = []
-        self.modified = []
-        self.generated_bees = []
+        self.generate_bees()
         self.memorized_paths = []
-        self.sorted_bees_list = self.sorted_bees()
 
     def generate_bees(self):
         '''Generates as many bees as defined in population_size'''
@@ -92,7 +92,7 @@ class Beehive:
     #-----------------------Modifications--------------------------------------------
 
 
-    def modify_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
+    def mutate_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
         modified_bees = []
         for bee in selected_bees:
             # creates a shallow copy of the path

@@ -25,10 +25,11 @@ def main():
 
 
     for i in range(GENERATION_COUNT):
-        modified_bees = beehive.modify_first_to_last(selected_paths)
+        pass
 
-        print("\nOriginal paths:\n", [bee.gathering_path() for bee in modified_bees])
-        print("\nModified paths:\n", [bee.modified_path for bee in modified_bees])
+
+        # print("\nOriginal paths:\n", [bee.gathering_path() for bee in modified_bees])
+        # print("\nModified paths:\n", [bee.modified_path for bee in modified_bees])
 
 if __name__ == "__main__":
     main()
