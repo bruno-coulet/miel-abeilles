@@ -15,7 +15,8 @@ def list_flowers():
     return flowers
 
 FLOWERS = list_flowers()
-POPULATION_SIZE = 3
-SELECTION = 1
-REJECTION = 1
+POPULATION_SIZE = 12
+SELECTION = 6
+REJECTION = 6
 INTERLIGNE = "-"*80
+GENERATION_COUNT =10

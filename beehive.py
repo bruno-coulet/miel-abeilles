@@ -1,14 +1,15 @@
 import random, math
-from constants import FLOWERS, POPULATION_SIZE, SELECTION, REJECTION
+from constants import FLOWERS, POPULATION_SIZE, SELECTION
 
 class Bee():
     def __init__(self, bee_id, bee_distance = 0, bee_path = [], modified_path = []):
         self.bee_id = bee_id
         self.flowers_list = FLOWERS.copy()
+        random.shuffle(self.flowers_list)
         self.distance = bee_distance
         self.path = bee_path
         self.modified_path = modified_path
-        random.shuffle(self.flowers_list)
+
     
     def distance_a_to_b(self ,a ,b) -> float:
         """Calculates the Euclidean distance between two points."""
@@ -46,13 +47,12 @@ class Bee():
 class Beehive:
     def __init__(self, population_size):
         self.population_size = population_size
-        self.generated_bees = []
+        self.generate_bees()
         self.memorized_paths = []
 
     def generate_bees(self):
         '''Generates as many bees as defined in population_size'''
         self.generated_bees = [Bee(i) for i in range(self.population_size)]
-        return self.generated_bees
 
     def sorted_bees(self) -> list[tuple[float, Bee]]:
         """Tuples (distance, bee object), sorted by the distance."""
@@ -65,9 +65,9 @@ class Beehive:
         sorted_bee_distances = self.sorted_bees()
         return [bee for _, bee in sorted_bee_distances[:SELECTION]]
 
-    def rejected_bees(self) -> list[Bee]:
-        rejected_bee_distances = self.sorted_bees()
-        return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
+    # def rejected_bees(self) -> list[Bee]:
+    #     rejected_bee_distances = self.sorted_bees()
+    #     return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
     
     def selected_paths(self) -> list[Bee]:
         ''' lists the paths of the best bees '''
