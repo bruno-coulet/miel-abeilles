@@ -1,5 +1,5 @@
 import random, math
-from constants import FLOWERS, POPULATION_SIZE, SELECTION, REJECTION
+from constants import FLOWERS, POPULATION_SIZE, SELECTION_RATE
 
 class Bee():
     def __init__(self, bee_distance = 0, bee_path = []):
@@ -34,13 +34,12 @@ class Bee():
         return f"\npath : {self.path}, distance : {self.distance}"
 
 
-
 #---------------------First Generation---------------------------------
 class Beehive:
     def __init__(self, population_size):
         self.population_size = population_size
         self.generate_bees()
-        self.select_bees()
+        # self.select_bees()
 
     def generate_bees(self) -> None:
         '''Generates as many bees as defined in population_size'''
@@ -58,7 +57,6 @@ class Beehive:
     # dans le main, il y a    print(beehive.bees)
 
     def cross_bees(self):
-
         for x in range(0,SELECTION+1,2):
 
             child = Bee()
@@ -68,28 +66,27 @@ class Beehive:
             print("parent_1",parent_1)
             print("parent_2",parent_2)
             print()
+
+            # FOR 50 FLOWERS
+            # parent_1_half_1 = parent_1.path[0][0:25]
+            # parent_2_half_2 = parent_2.path[1][25:-1]
+
             # FOR 6 FLOWERS
-            parent_1_half_1 = parent_1.path[0:3]
-            parent_2_half_2 = parent_2.path[3:]
-            child.path = [parent_1_half_1 + parent_2_half_2]
+            child_path = parent_1.path[:3]
+            for flower in parent_2:
+                if flower not in child_path:
+                    child_path.append(flower)
+            child.path = child_path
+            # child_distance = child.compute_distance()
             print("child.path : ",child.path)
-            print()
+            # print("child_distance : ",child_distance)
+ 
+ 
+
+
 
 
  
-
-        # for bee in self.bees:
-
-
-        #     child = bee
-
-
-        #     # FOR 50 FLOWERS
-        #     # parent_1_half_1 = self.memorized_paths[0][0:25]
-        #     # parent_2_half_2 = self.memorized_paths[1][25:-1]
-        #     # FOR 6 FLOWERS
-        #     parent_1_half_1 = self.bees.path[0][0:3]
-        #     parent_2_half_2 = self.bees.path[1][3:]
 
         #     child.path = [parent_1_half_1 + parent_2_half_2]
 

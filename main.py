@@ -14,6 +14,7 @@ def main():
 
     # for i in range(GENERATION_COUNT):
     print(f"\nChemins APRES cross_over:\n")    
+    beehive.select_bees()
     beehive.cross_bees()
 
 
