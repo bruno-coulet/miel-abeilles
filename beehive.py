@@ -70,9 +70,9 @@ class Beehive:
         sorted_bee_distances = self.sorted_bees()
         return [bee for _, bee in sorted_bee_distances[:SELECTION]]
 
-    # def rejected_bees(self) -> list[Bee]:
-    #     rejected_bee_distances = self.sorted_bees()
-    #     return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
+    def rejected_bees(self) -> list[Bee]:
+        rejected_bee_distances = self.sorted_bees()
+        return [bee for _, bee in rejected_bee_distances[-REJECTION:]]
     
     def selected_paths(self) -> list[Bee]:
         ''' lists the paths of the best bees '''
@@ -91,8 +91,14 @@ class Beehive:
     def cross_bees(self):
         # for bee in range(SELECTION):
         # for bee in self.selected_bee:
-    
-        child_1 = Bee(POPULATION_SIZE-SELECTION)
+
+        rejected_bees_id = []
+        print("Les id des rejected_bees sont : \n")
+        for bee in self.rejected_bees():
+            rejected_bees_id.append(bee.bee_id)
+        print(rejected_bees_id)
+
+        child_1 = Bee(rejected_bees_id[0])
 
         # FOR 50 FLOWERS
         # parent_1_half_1 = self.memorized_paths[0][0:25]
@@ -108,7 +114,7 @@ class Beehive:
         "abeille ",child_1.bee_id," : ","distance = ",child_1.total_distance(),"\n")
         
 
-        child_2 = Bee(POPULATION_SIZE-SELECTION+1)
+        child_2 = Bee(rejected_bees_id[1])
 
         parent_1_half_2 = self.memorized_paths[0][25:-1]
         parent_2_half_1 = self.memorized_paths[1][0:25]
