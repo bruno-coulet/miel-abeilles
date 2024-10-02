@@ -7,22 +7,21 @@ def main():
     print("\nPopulation : ", POPULATION_SIZE, " abeilles\nSelection  : ", SELECTION, " abeilles\n")
 
     beehive.generate_bees()
-    selected_bees = beehive.selected_bees()
+    # selected_bees = beehive.selected_bees()
 
-    for bee in selected_bees:
-        print(f"L'abeille {bee.bee_id} a parcourue une distance de {bee.total_distance()}")
+    print(INTERLIGNE)
 
     print(f"\nChemins des {SELECTION} meilleures abeilles avant cross_over:\n")
     selected_paths = beehive.selected_paths()
     for bee in selected_paths:
-        print(f"Abeille {bee.bee_id},\n chemin : {bee.gathering_path()}\n")
+        print(f" chemin de l'abeille {bee.bee_id} : {bee.gathering_path()}\ndistance de l'abeille {bee.bee_id} : {bee.total_distance()}\n\n")
 
 
-        print(INTERLIGNE)
+    print(INTERLIGNE)
 
 
     # for i in range(GENERATION_COUNT):
-    print(f"\nChemins de child_1 apres cross_over:\n")    
+    print(f"\nChemins apres cross_over:\n")    
     beehive.cross_bees()
 
         # print("\nOriginal paths:\n", [bee.gathering_path() for bee in modified_bees])

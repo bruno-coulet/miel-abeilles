@@ -92,32 +92,33 @@ class Beehive:
         # for bee in range(SELECTION):
         # for bee in self.selected_bee:
     
-        child_1 = Bee(POPULATION_SIZE//2+1)
+        child_1 = Bee(POPULATION_SIZE-SELECTION)
 
+        # FOR 50 FLOWERS
         # parent_1_half_1 = self.memorized_paths[0][0:25]
         # parent_2_half_2 = self.memorized_paths[1][25:-1]
+        # FOR 100 FLOWERS
         parent_1_half_1 = self.memorized_paths[0][0:3]
         parent_2_half_2 = self.memorized_paths[1][3:]
+
         child_1.bee_path = [parent_1_half_1 + parent_2_half_2]
 
-        print("child_1 id : ",child_1.bee_id, "\n",\
-        "child_1 path : ",child_1.bee_path,"\n",\
-        "child_1 distance : ",child_1.total_distance())
-        # print("child_1 : ",child_1)
-        # print(f"L'abeille {child_1.bee_id} a parcourue une distance de {child_1.total_distance()}\n")
-        print()
+        print("child_1 id : ",child_1.bee_id,"\n",\
+        "abeille ",child_1.bee_id," : ","path = ",child_1.bee_path,"\n",\
+        "abeille ",child_1.bee_id," : ","distance = ",child_1.total_distance(),"\n")
         
 
-        child_2 = Bee(POPULATION_SIZE//2+2)
-        print("child_2 id : ",child_2.bee_id)
+        child_2 = Bee(POPULATION_SIZE-SELECTION+1)
+
         parent_1_half_2 = self.memorized_paths[0][25:-1]
         parent_2_half_1 = self.memorized_paths[1][0:25]
+
         child_2.bee_path = [parent_1_half_2 + parent_2_half_1]
   
+        print("child_2 id : ",child_2.bee_id,"\n",\
+        "abeille ",child_2.bee_id," : ","path = ",child_2.bee_path,"\n",\
+        "abeille ",child_2.bee_id," : ","distance = ",child_2.total_distance(),"\n")
 
-        # bee = Bee(self)
-        # new_distance = bee.total_distance()
-        # print(new_distance)
 
 
 
