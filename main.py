@@ -15,17 +15,16 @@ def main():
     )
 
     # beehive.generate_bees() EST DEJA DANS LE CONSTRUCTEUR
-
     print(f"\nChemins AVANT cross_over:\n")
-    print("beehive.bees : ", beehive.bees)
+    beehive.bees
 
-    # for i in range(POPULATION_SIZE):
-    print(f"\nChemins APRES cross_over:\n")
-
+    # Sorts bees according to their distance
     beehive.select_bees()
-    # print("select_bees() : ",selected)
+    print(f"\nChemins APRES cross_over:\n")
+    
 
-    crossed = beehive.cross_bees()
+
+    beehive.cross_bees()
 
 
 if __name__ == "__main__":

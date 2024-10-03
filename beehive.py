@@ -40,7 +40,6 @@ class Beehive:
     def __init__(self, population_size):
         self.population_size = population_size
         self.generate_bees()
-        # self.select_bees()
 
     def generate_bees(self) -> None:
         """Generates as many bees as defined in POPULATION_SIZE"""
@@ -49,46 +48,51 @@ class Beehive:
     def select_bees(self) -> None:
         """Sorts bees according to their distance"""
         self.bees.sort(key=lambda bee: bee.distance)
-        self.bees = self.bees[:POPULATION_SIZE]
+        self.bees = self.bees[:int(SELECTED_BEES)]
 
-    def get_bees(self) -> list[Bee]:
-        return self.bees
 
     # -----------------------Cross over--------------------------------------------
     # dans le main, il y a    print(beehive.bees)
+    def cross_2_bees(self, parent_1, parent_2):
+        '''reproduce the selected bees'''
+        middle = len(parent_1.path)//2
+        child_path = parent_1.path[:middle]
+
+        
+        for flower in parent_2.path:
+            if flower not in child_path:
+                child_path.append(flower)
+                
+            return child_path
 
     def cross_bees(self):
+        '''self.bees est déjà triée selectionné'''
 
-        # self.bees = self.bees[:int(SELECTED_BEES)]
-
-        selected_bees = self.bees[: int(SELECTED_BEES)]
-
-        for x in range(0, POPULATION_SIZE - len(selected_bees), 2):
+        for x in range(POPULATION_SIZE - len(self.bees)):
             """Creates a child for each unselected bee
             parents are the selected bees"""
 
-            child_1 = Bee()
-            child_2 = Bee()
-
             parent_1 = self.bees[x]
             parent_2 = self.bees[x + 1]
-            print("parent_1", parent_1)
-            print("parent_2", parent_2)
-            print()
+            child = self.cross_2_bees(parent_1, parent_2)
+            self.bees.append(child)
+            print("cross_bees, objet parent_1", parent_1)
+            print("cross_bees, objet parent_2", parent_2)
+
 
             # FOR 50 FLOWERS
             # parent_1_half_1 = parent_1.path[0][0:25]
             # parent_2_half_2 = parent_2.path[1][25:-1]
 
             # FOR 6 FLOWERS
-            child_path = parent_1.path[:3]
-            for flower in parent_2.path:
-                if flower not in child_path:
-                    child_path.append(flower)
-            child_1.path = child_path
+            # child_path = parent_1.path[:3]
+            # for flower in parent_2.path:
+            #     if flower not in child_path:
+            #         child_path.append(flower)
+            # child.path = child_path
 
             # child_distance = child.compute_distance()
-            print("child_1.path : ", child_1.path, "\n")
+            # print("child_1.path : ", child.path, "\n")
             # print("child_distance : ",child_distance)
 
         #     child.path = [parent_1_half_1 + parent_2_half_2]
