@@ -1,5 +1,5 @@
 import random, math
-from constants import FLOWERS, POPULATION_SIZE, SELECTION_RATE
+from constants import FLOWERS, POPULATION_SIZE, SELECTION_RATE, SELECTED_BEES
 
 class Bee():
     def __init__(self, bee_distance = 0, bee_path = []):
@@ -42,11 +42,13 @@ class Beehive:
         # self.select_bees()
 
     def generate_bees(self) -> None:
-        '''Generates as many bees as defined in population_size'''
+        '''Generates as many bees as defined in POPULATION_SIZE'''
         self.bees = [Bee(i) for i in range(self.population_size)]
     
     def select_bees(self) -> None:
+        '''Sorts bees according to their distance'''
         self.bees.sort(key = lambda bee:bee.distance)
+        self.bees = self.bees[:POPULATION_SIZE]
 
     def get_bees(self) -> list[Bee]:
         return self.bees
@@ -57,9 +59,17 @@ class Beehive:
     # dans le main, il y a    print(beehive.bees)
 
     def cross_bees(self):
-        for x in range(0,SELECTION+1,2):
 
-            child = Bee()
+        # self.bees = self.bees[:int(SELECTED_BEES)]
+
+        selected_bees = self.bees[:int(SELECTED_BEES)]
+
+        for x in range(0, POPULATION_SIZE - len(selected_bees),2):
+            ''' Creates a child for each unselected bee
+                parents are the selected bees '''
+
+            child_1 = Bee()
+            child_2 = Bee()
 
             parent_1 = self.bees[x]
             parent_2 = self.bees[x+1]
@@ -73,12 +83,13 @@ class Beehive:
 
             # FOR 6 FLOWERS
             child_path = parent_1.path[:3]
-            for flower in parent_2:
+            for flower in parent_2.path:
                 if flower not in child_path:
                     child_path.append(flower)
-            child.path = child_path
+            child_1.path = child_path
+            
             # child_distance = child.compute_distance()
-            print("child.path : ",child.path)
+            print("child_1.path : ",child_1.path,"\n")
             # print("child_distance : ",child_distance)
  
  
