@@ -54,8 +54,8 @@ class Beehive:
 
     # -----------------------Cross over--------------------------------------------
 
-    def cross_2_bees(self, parent_1, parent_2):
-        '''reproduce the selected bees'''
+    def mix_paths(self, parent_1, parent_2):
+        '''Mixes the paths of the selected bees'''
         half_path_length = len(parent_1.path)//2
         # child_path gets the first half of parent_1's flowers
         child_path = parent_1.path[:half_path_length]
@@ -75,7 +75,7 @@ class Beehive:
 
             parent_1 = self.bees[x]
             parent_2 = self.bees[x + 1]
-            child_path = self.cross_2_bees(parent_1, parent_2)
+            child_path = self.mix_paths(parent_1, parent_2)
 
             # Create a new Bee with the generated child_path
             child = Bee()
