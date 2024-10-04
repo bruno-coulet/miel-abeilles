@@ -1,24 +1,20 @@
 from beehive import Beehive
-from constants import POPULATION_SIZE, SELECTION_RATE, INTERLIGNE, GENERATION_COUNT
+from constants import POPULATION_SIZE, SELECTION_RATE
 
 
 def main():
 
+    # generate_bees() IS IN THE Beehive CONSTRUCTOR
     beehive = Beehive(POPULATION_SIZE)
 
-    print(
-        "\nPopulation : ",
-        POPULATION_SIZE,
-        " abeilles\nTaux de selection  : ",
-        SELECTION_RATE,
-        " abeilles\n",
-    )
+    # Therefore the 'bees' objects are generated 
+    print("\nPopulation : ",POPULATION_SIZE," abeilles\nTaux de selection  : ",SELECTION_RATE)
 
-    # beehive.generate_bees() EST DEJA DANS LE CONSTRUCTEUR
-    print(f"\nChemins AVANT cross_over:\n")
-    beehive.bees
+    # And we can print their performances thanks to the __repr__ function of Bee class
+    print(f"\nChemins et distances des abeilles AVANT cross_over:\n")
+    print(beehive.bees)
 
-    # Sorts bees according to their distance
+    # Sorts and selects the bees according to their distances and the SELECTION RATE
     beehive.select_bees()
     print(f"\nChemins APRES cross_over:\n")
     

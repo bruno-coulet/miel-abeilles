@@ -45,28 +45,29 @@ class Beehive:
         """Generates as many bees as defined in POPULATION_SIZE"""
         self.bees = [Bee(i) for i in range(self.population_size)]
 
-    def select_bees(self) -> None:
-        """Sorts bees according to their distance"""
+    def select_bees(self) -> None:  
+        """Sorts bees according to their distance
+           Selects the top of the list according to the SELECTION RATE"""
         self.bees.sort(key=lambda bee: bee.distance)
         self.bees = self.bees[:int(SELECTED_BEES)]
 
 
     # -----------------------Cross over--------------------------------------------
-    # dans le main, il y a    print(beehive.bees)
+
     def cross_2_bees(self, parent_1, parent_2):
         '''reproduce the selected bees'''
-        middle = len(parent_1.path)//2
-        child_path = parent_1.path[:middle]
+        half_path_length = len(parent_1.path)//2
+        # child_path gets the first half of parent_1's flowers
+        child_path = parent_1.path[:half_path_length]
 
-        
+        # child_path gets the missing flowers in parent_2's path
         for flower in parent_2.path:
             if flower not in child_path:
                 child_path.append(flower)
                 
-            return child_path
+        return child_path
 
     def cross_bees(self):
-        '''self.bees est déjà triée selectionné'''
 
         for x in range(POPULATION_SIZE - len(self.bees)):
             """Creates a child for each unselected bee
@@ -74,10 +75,19 @@ class Beehive:
 
             parent_1 = self.bees[x]
             parent_2 = self.bees[x + 1]
-            child = self.cross_2_bees(parent_1, parent_2)
+            child_path = self.cross_2_bees(parent_1, parent_2)
+
+            # Create a new Bee with the generated child_path
+            child = Bee()
+            child.path = child_path
+            child.compute_distance()
+
+            # Append the new Bee object to the list of bees
             self.bees.append(child)
-            print("cross_bees, objet parent_1", parent_1)
-            print("cross_bees, objet parent_2", parent_2)
+
+            print("parent_1", parent_1)
+            print("parent_2", parent_2)
+            print("child", child)
 
 
             # FOR 50 FLOWERS
