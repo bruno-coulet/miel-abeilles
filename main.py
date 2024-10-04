@@ -10,18 +10,30 @@ def main():
     # Therefore the 'bees' objects are generated 
     print("\nPopulation : ",POPULATION_SIZE," abeilles\nTaux de selection  : ",SELECTION_RATE)
 
-    # And we can print their performances thanks to the __repr__ function of Bee class
-    print(f"\nChemins et distances des abeilles AVANT cross_over:\n")
-    print(beehive.bees)
+    # # And we can print their performances thanks to the __repr__ function of Bee class
+    # print(f"\nChemins et distances des abeilles AVANT cross_over:\n")
+    # print(beehive.bees)
 
     # Sorts and selects the bees according to their distances and the SELECTION RATE
     beehive.select_bees()
-    print(f"\nChemins APRES cross_over:\n")
-    
+    beehive.best_bee()
+    beehive.average_distance()
 
+    print(f"\nCROSS OVER:\n")
+    
+    # Creates child and adds them to the list of bees
+    beehive.cross_bees()
+    beehive.best_bee()
+    beehive.average_distance()
 
     beehive.cross_bees()
+    beehive.best_bee()
+    beehive.average_distance()
 
+    beehive.cross_bees()
+    beehive.best_bee()
+    beehive.average_distance()
+    
 
 if __name__ == "__main__":
     main()

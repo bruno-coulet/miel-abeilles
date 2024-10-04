@@ -45,6 +45,17 @@ class Beehive:
         """Generates as many bees as defined in POPULATION_SIZE"""
         self.bees = [Bee(i) for i in range(self.population_size)]
 
+    def best_bee(self):
+        best_bee = self.bees[0]
+        print(f"Meilleur distance : {best_bee.distance}")
+
+    def average_distance(self) -> float:
+        """Calculates the average distance of all bees in the hive"""
+        group_distance = sum(bee.distance for bee in self.bees)
+        medium_distance = round(group_distance / len(self.bees),2)
+        print(f"Distance moyenne : {medium_distance}")
+        return medium_distance
+
     def select_bees(self) -> None:  
         """Sorts bees according to their distance
            Selects the top of the list according to the SELECTION RATE"""
@@ -54,7 +65,7 @@ class Beehive:
 
     # -----------------------Cross over--------------------------------------------
 
-    def mix_paths(self, parent_1, parent_2):
+    def mix_paths(self, parent_1, parent_2) -> list [int,int]:
         '''Mixes the paths of the selected bees'''
         half_path_length = len(parent_1.path)//2
         # child_path gets the first half of parent_1's flowers
@@ -85,9 +96,12 @@ class Beehive:
             # Append the new Bee object to the list of bees
             self.bees.append(child)
 
-            print("parent_1", parent_1)
-            print("parent_2", parent_2)
-            print("child", child)
+            # print("parent_1", parent_1)
+            # print("parent_2", parent_2)
+            # print("child", child)
+
+        # print(f"\nNombre d'enfants créés : {child_count}")
+
 
 
             # FOR 50 FLOWERS
