@@ -48,6 +48,7 @@ class Beehive:
     def best_bee(self):
         best_bee = self.bees[0]
         print(f"Meilleur distance : {best_bee.distance}")
+        return best_bee.distance
 
     def average_distance(self) -> float:
         """Calculates the average distance of all bees in the hive"""
@@ -96,6 +97,9 @@ class Beehive:
             # Append the new Bee object to the list of bees
             self.bees.append(child)
 
+            # for bee in self.bees:
+            #     bee.compute_distance()
+
             # print("parent_1", parent_1)
             # print("parent_2", parent_2)
             # print("child", child)
@@ -136,17 +140,17 @@ class Beehive:
         #     print("child_2\npath = ",child_2.bee_path,"\ndistance = ",child_2.distance,"\n")
 
     # -----------------------Modifications--------------------------------------------
-
-    # def mutate_first_to_last(self, selected_bees: list[Bee]) -> list[Bee]:
-    #     modified_bees = []
-    #     for bee in selected_bees:
-    #         # creates a shallow copy of the path
-    #         path = bee.gathering_path()[:]
-    #         path[0], path[-1] = path[-1], path[0]
-    #         # Assign modified path to the bee
-    #         bee.modified_path = path
-    #         modified_bees.append(bee)
-    #     return modified_bees
+    
+    def mutate_first_to_last(self, bees: list[Bee]) -> list[Bee]:
+        modified_bees = []
+        for bee in bees:
+            # Utilisez directement bee.path sans les parenthèses
+            path = bee.path[:]
+            path[0], path[-1] = path[-1], path[0]  # Échanger la première et la dernière fleur
+            bee.path = path
+            bee.compute_distance()  # Recalculer la distance après mutation
+            modified_bees.append(bee)
+        return modified_bees
 
 
 # ------------------------Second generation----------------------------------------

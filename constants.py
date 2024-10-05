@@ -4,7 +4,7 @@ import csv
 def list_flowers():
     flowers = []
 
-    with open("data/mini_fleurs.csv", newline="") as csvfile:
+    with open("data/fleurs.csv", newline="") as csvfile:
         reader = csv.reader(csvfile)
         # skips the header
         next(reader)
@@ -16,9 +16,10 @@ def list_flowers():
     return flowers
 
 
-GENERATION_COUNT = 2
+# GENERATION_COUNT = 2
 FLOWERS = list_flowers()
-POPULATION_SIZE = 50
+CYCLE_NUMBER = 100
+POPULATION_SIZE = 100
 SELECTION_RATE = 0.2
 SELECTED_BEES = POPULATION_SIZE * SELECTION_RATE
 INTERLIGNE = "-" * 80
