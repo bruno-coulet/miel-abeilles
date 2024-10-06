@@ -16,7 +16,6 @@ def list_flowers():
     return flowers
 
 
-# GENERATION_COUNT = 2
 FLOWERS = list_flowers()
 CYCLE_NUMBER = 100
 POPULATION_SIZE = 100
