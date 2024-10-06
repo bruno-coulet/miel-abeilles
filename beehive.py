@@ -97,58 +97,26 @@ class Beehive:
             # Append the new Bee object to the list of bees
             self.bees.append(child)
 
-            # for bee in self.bees:
-            #     bee.compute_distance()
-
             # print("parent_1", parent_1)
             # print("parent_2", parent_2)
             # print("child", child)
-
-        # print(f"\nNombre d'enfants créés : {child_count}")
-
 
 
             # FOR 50 FLOWERS
             # parent_1_half_1 = parent_1.path[0][0:25]
             # parent_2_half_2 = parent_2.path[1][25:-1]
-
-            # FOR 6 FLOWERS
-            # child_path = parent_1.path[:3]
-            # for flower in parent_2.path:
-            #     if flower not in child_path:
-            #         child_path.append(flower)
-            # child.path = child_path
-
-            # child_distance = child.compute_distance()
-            # print("child_1.path : ", child.path, "\n")
-            # print("child_distance : ",child_distance)
-
-        #     child.path = [parent_1_half_1 + parent_2_half_2]
-
-        #     print("child_1\npath = ",child. path,"\ndistance = ",child.distance,"\n")
-
-        #     child_2 = Bee()
-        #     # FOR 50 FLOWERS
-        #     # parent_1_half_2 = self.memorized_paths[0][25:-1]
-        #     # parent_2_half_1 = self.memorized_paths[1][0:25]
-        #     # FOR 6 FLOWERS
-        #     parent_1_half_2 = self.bees.paths[0][3:]
-        #     parent_2_half_1 = self.bees.paths[1][0:3]
-
-        #     child_2.bee_path = [parent_1_half_2 + parent_2_half_1]
-
-        #     print("child_2\npath = ",child_2.bee_path,"\ndistance = ",child_2.distance,"\n")
+   
 
     # -----------------------Modifications--------------------------------------------
     
-    def mutate_first_to_last(self, bees: list[Bee]) -> list[Bee]:
+    def mutate_first_to_last(self, bees) -> list[Bee]:
         modified_bees = []
         for bee in bees:
-            # Utilisez directement bee.path sans les parenthèses
             path = bee.path[:]
-            path[0], path[-1] = path[-1], path[0]  # Échanger la première et la dernière fleur
+            # Swaps first and last flower
+            path[0], path[-1] = path[-1], path[0]
             bee.path = path
-            bee.compute_distance()  # Recalculer la distance après mutation
+            bee.compute_distance() 
             modified_bees.append(bee)
         return modified_bees
 
