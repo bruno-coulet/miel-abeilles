@@ -1,7 +1,6 @@
 import random, math
 from constants import FLOWERS, POPULATION_SIZE, SELECTION_RATE, SELECTED_BEES
 
-
 class Bee:
     def __init__(self, bee_distance=0, bee_path=[]):
         self.path = FLOWERS.copy()
@@ -10,152 +9,112 @@ class Bee:
 
     def distance_a_to_b(self, a, b) -> float:
         """Calculates the Euclidean distance between two points."""
-        stage_distance = round(math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2), 2)
-        return stage_distance
+        return round(math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2), 2)
 
     def compute_distance(self) -> float:
-        """Calculates the total distance from the hive, through every shuffled flower,back to the hive."""
+        """Calculates the total distance from the hive, through every shuffled flower, and back to the hive."""
         hive = (500, 500)
         current_position = hive
         total_distance = 0
 
         for flower in self.path:
-            stage_distance = self.distance_a_to_b(current_position, flower)
-            total_distance += stage_distance
+            total_distance += self.distance_a_to_b(current_position, flower)
             current_position = flower
 
-        return_to_hive_distance = self.distance_a_to_b(current_position, hive)
-        total_distance += return_to_hive_distance
-        # total_distance = round(total_distance,2)
-
-        # print(f"\n'total_distance'-> Distance totale parcourue : {total_distance}")
+        # Retour à la ruche
+        total_distance += self.distance_a_to_b(current_position, hive)
         self.distance = round(total_distance, 2)
 
-    def __repr__(self) -> str:
-        return f"\npath : {self.path}, distance : {self.distance}"
-
-
-# ---------------------First Generation---------------------------------
 class Beehive:
-    def __init__(self, population_size):
+    def __init__(self, population_size, mutation_rate=0.1):  # Ajout du taux de mutation
         self.population_size = population_size
+        self.mutation_rate = mutation_rate  # Stocker le taux de mutation
         self.generate_bees()
 
     def generate_bees(self) -> None:
-        """Generates as many bees as defined in POPULATION_SIZE"""
-        self.bees = [Bee(i) for i in range(self.population_size)]
+        """Génère la population initiale de 'population_size' abeilles"""
+        self.bees = [Bee() for _ in range(self.population_size)]
 
-    def best_bee(self):
-        best_bee = self.bees[0]
-        print(f"Meilleur distance : {best_bee.distance}")
-        return best_bee.distance
+    def select_bees(self) -> None:
+        """Trie les abeilles en fonction de leur distance et garde les meilleures."""
+        self.bees.sort(key=lambda bee: bee.distance)
+        self.bees = self.bees[:int(SELECTED_BEES)]
+
+    def cross_2_bees(self, parent_1: Bee, parent_2: Bee):
+        """Croisement entre deux abeilles"""
+        middle = len(parent_1.path) // 2
+        child_path = parent_1.path[:middle]
+
+        for flower in parent_2.path:
+            if flower not in child_path:
+                child_path.append(flower)
+
+        child = Bee()
+        child.path = child_path
+        child.compute_distance()
+        return child
+
+    def cross_bees(self):
+        """Croisement des abeilles sélectionnées pour générer une nouvelle population"""
+        new_bees = []
+        for i in range(len(self.bees) - 1):
+            parent_1 = self.bees[i]
+            parent_2 = self.bees[i + 1]
+            child = self.cross_2_bees(parent_1, parent_2)
+            
+            # Appliquer une mutation aléatoire avec une probabilité `mutation_rate`
+            if random.random() < self.mutation_rate:
+                self.mutate_swap(child)
+            
+            new_bees.append(child)
+        
+        # Compléter la population jusqu'à POPULATION_SIZE avec les enfants générés
+        while len(new_bees) < POPULATION_SIZE:
+            parent_1 = random.choice(self.bees)
+            parent_2 = random.choice(self.bees)
+            child = self.cross_2_bees(parent_1, parent_2)
+            
+            # Appliquer une mutation aléatoire avec une probabilité `mutation_rate`
+            if random.random() < self.mutation_rate:
+                self.mutate_swap(child)
+
+            new_bees.append(child)
+
+        self.bees = new_bees
+
+    def mutate_swap(self, bee: Bee):
+        """Mutation simple qui échange deux fleurs dans le chemin"""
+        i, j = random.sample(range(len(bee.path)), 2)
+        bee.path[i], bee.path[j] = bee.path[j], bee.path[i]
+        bee.compute_distance()
 
     def average_distance(self) -> float:
         """Calculates the average distance of all bees in the hive"""
         group_distance = sum(bee.distance for bee in self.bees)
-        medium_distance = round(group_distance / len(self.bees),2)
+        medium_distance = round(group_distance / len(self.bees), 2)
         print(f"Distance moyenne : {medium_distance}")
         return medium_distance
 
-    def select_bees(self) -> None:  
-        """Sorts bees according to their distance
-           Selects the top of the list according to the SELECTION RATE"""
-        self.bees.sort(key=lambda bee: bee.distance)
-        self.bees = self.bees[:int(SELECTED_BEES)]
+def genetic_algorithm(number_of_generations, mutation_rate=0.1):
+    """Algorithme génétique exécutant plusieurs générations."""
+    beehive = Beehive(POPULATION_SIZE, mutation_rate)
+
+    for generation in range(number_of_generations):
+        print(f"--- Génération {generation + 1} ---")
+
+        # Sélection des meilleures abeilles
+        beehive.select_bees()
+        print(f"Meilleure distance après sélection : {beehive.bees[0].distance}")
+
+        # Calculer et afficher la distance moyenne des abeilles
+        beehive.average_distance()
+
+        # Croisement des abeilles pour former une nouvelle génération
+        beehive.cross_bees()
+
+    # Retourner la meilleure solution trouvée
+    best_bee = beehive.bees[0]
+    print(f"Meilleure solution trouvée : {best_bee.path}, Distance : {best_bee.distance}")
+    return best_bee
 
 
-    # -----------------------Cross over--------------------------------------------
-
-    def mix_paths(self, parent_1, parent_2) -> list [int,int]:
-        '''Mixes the paths of the selected bees'''
-        half_path_length = len(parent_1.path)//2
-        # child_path gets the first half of parent_1's flowers
-        child_path = parent_1.path[:half_path_length]
-
-        # child_path gets the missing flowers in parent_2's path
-        for flower in parent_2.path:
-            if flower not in child_path:
-                child_path.append(flower)
-                
-        return child_path
-
-    def cross_bees(self):
-
-        for x in range(POPULATION_SIZE - len(self.bees)):
-            """Creates a child for each unselected bee
-            parents are the selected bees"""
-
-            parent_1 = self.bees[x]
-            parent_2 = self.bees[x + 1]
-            child_path = self.mix_paths(parent_1, parent_2)
-
-            # Create a new Bee with the generated child_path
-            child = Bee()
-            child.path = child_path
-            child.compute_distance()
-
-            # Append the new Bee object to the list of bees
-            self.bees.append(child)
-
-            # for bee in self.bees:
-            #     bee.compute_distance()
-
-            # print("parent_1", parent_1)
-            # print("parent_2", parent_2)
-            # print("child", child)
-
-        # print(f"\nNombre d'enfants créés : {child_count}")
-
-
-
-            # FOR 50 FLOWERS
-            # parent_1_half_1 = parent_1.path[0][0:25]
-            # parent_2_half_2 = parent_2.path[1][25:-1]
-
-            # FOR 6 FLOWERS
-            # child_path = parent_1.path[:3]
-            # for flower in parent_2.path:
-            #     if flower not in child_path:
-            #         child_path.append(flower)
-            # child.path = child_path
-
-            # child_distance = child.compute_distance()
-            # print("child_1.path : ", child.path, "\n")
-            # print("child_distance : ",child_distance)
-
-        #     child.path = [parent_1_half_1 + parent_2_half_2]
-
-        #     print("child_1\npath = ",child. path,"\ndistance = ",child.distance,"\n")
-
-        #     child_2 = Bee()
-        #     # FOR 50 FLOWERS
-        #     # parent_1_half_2 = self.memorized_paths[0][25:-1]
-        #     # parent_2_half_1 = self.memorized_paths[1][0:25]
-        #     # FOR 6 FLOWERS
-        #     parent_1_half_2 = self.bees.paths[0][3:]
-        #     parent_2_half_1 = self.bees.paths[1][0:3]
-
-        #     child_2.bee_path = [parent_1_half_2 + parent_2_half_1]
-
-        #     print("child_2\npath = ",child_2.bee_path,"\ndistance = ",child_2.distance,"\n")
-
-    # -----------------------Modifications--------------------------------------------
-    
-    def mutate_first_to_last(self, bees: list[Bee]) -> list[Bee]:
-        modified_bees = []
-        for bee in bees:
-            # Utilisez directement bee.path sans les parenthèses
-            path = bee.path[:]
-            path[0], path[-1] = path[-1], path[0]  # Échanger la première et la dernière fleur
-            bee.path = path
-            bee.compute_distance()  # Recalculer la distance après mutation
-            modified_bees.append(bee)
-        return modified_bees
-
-
-# ------------------------Second generation----------------------------------------
-
-# Ne pas changer les 50 meilleurs abeilles
-# la 51eme prend le chemin de la première et swape la 1ère et la dernière fleur
-# la 52eme prend le chemin de la 2ère et swape la 1ère et la dernière fleur
-#  etc...
