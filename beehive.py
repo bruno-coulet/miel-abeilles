@@ -57,7 +57,7 @@ class Beehive:
         return child
 
     def cross_bees(self):
-        """Croisement des abeilles sélectionnées pour générer une nouvelle population"""
+        
         new_bees = []
         for i in range(len(self.bees) - 1):
             parent_1 = self.bees[i]
