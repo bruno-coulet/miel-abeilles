@@ -1,5 +1,5 @@
 import random, math
-from constants import FLOWERS, POPULATION_SIZE, SELECTION_RATE, SELECTED_BEES
+from constants import FLOWERS, POPULATION_SIZE, SELECTION_RATE, SELECTED_BEES, MUTATION_RATE
 
 class Bee:
     def __init__(self, bee_distance=0, bee_path=[]):
@@ -25,9 +25,9 @@ class Bee:
         self.distance = round(total_distance, 2)
 
 class Beehive:
-    def __init__(self, population_size, mutation_rate=0.1):
+    def __init__(self, population_size, MUTATION_RATE):
         self.population_size = population_size
-        self.mutation_rate = mutation_rate
+        self.mutation_rate = MUTATION_RATE
         self.generate_bees()
 
     def generate_bees(self) -> None:
@@ -57,8 +57,9 @@ class Beehive:
         return child
 
     def cross_bees(self):
-        
+
         new_bees = []
+        # creates children from the selected bees
         for i in range(len(self.bees) - 1):
             parent_1 = self.bees[i]
             parent_2 = self.bees[i + 1]
@@ -69,7 +70,8 @@ class Beehive:
                 self.mutate_swap(child)
             
             new_bees.append(child)
-        
+
+        # creates more children to reach the quotas
         while len(new_bees) < POPULATION_SIZE:
             parent_1 = random.choice(self.bees)
             parent_2 = random.choice(self.bees)
@@ -98,19 +100,17 @@ class Beehive:
 
 
 
-def genetic_algorithm(number_of_generations, mutation_rate=0.1):
+def genetic_algorithm(CYCLE_NUMBER, MUTATION_RATE):
 
-    beehive = Beehive(POPULATION_SIZE, mutation_rate)
+    beehive = Beehive(POPULATION_SIZE, MUTATION_RATE)
 
-    for generation in range(number_of_generations):
+    for generation in range(CYCLE_NUMBER):
         print(f"--- Génération {generation + 1} ---")
 
         beehive.select_bees()
         print(f"Meilleure distance après sélection : {beehive.bees[0].distance}")
 
         beehive.average_distance()
-
-
         beehive.cross_bees()
 
 
