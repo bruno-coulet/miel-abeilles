@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def plot_best_path(coordinates, best_path):
+def bee_best_path(coordinates, best_path):
     """
     Plot the path taken by the best bee.
     

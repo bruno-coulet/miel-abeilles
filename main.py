@@ -1,7 +1,8 @@
 from beehive import Beehive, genetic_algorithm
 from constants import POPULATION_SIZE, SELECTION_RATE, CYCLE_NUMBER, MUTATION_RATE, FLOWERS
 import matplotlib.pyplot as plt
-from plot_path import plot_best_path
+from bee_path import bee_best_path
+from bee_performance import bee_performance
 
 def main():
     # Initialize the beehive
@@ -12,18 +13,10 @@ def main():
     best_bee, average_distances, best_distances = genetic_algorithm(CYCLE_NUMBER, MUTATION_RATE)
 
     # Plot the performance of the bees
-    plt.plot(range(CYCLE_NUMBER + 1), average_distances, marker='o', linestyle='-', color='b', label='Average distance')
-    plt.plot(range(CYCLE_NUMBER + 1), best_distances, marker='x', linestyle='--', color='r', label='Best distance')
-
-    plt.title('Evolution of Swarm Performance')
-    plt.xlabel('Generation')
-    plt.ylabel('Distance')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    bee_performance(CYCLE_NUMBER, average_distances, best_distances)
 
     # Plot the path taken by the best bee
-    plot_best_path(FLOWERS, best_bee.path)
+    bee_best_path(FLOWERS, best_bee.path)
 
 if __name__ == "__main__":
     main()
