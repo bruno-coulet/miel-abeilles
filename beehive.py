@@ -40,10 +40,10 @@ class Beehive:
         self.bees.sort(key=lambda bee: bee.distance)
         self.bees = self.bees[:int(SELECTED_BEES)]
 
-    def mix_paths(self, parent_1, parent_2) ->list[int,int]:
+    def mix_paths(self, parent_1, parent_2) -> list[int, int]:
         """Mixes the paths of the selected bees"""
         half_path_length = len(parent_1.path) // 2
-        #  child_path gets the first half of parent_1's flowers
+        # child_path gets the first half of parent_1's flowers
         child_path = parent_1.path[:half_path_length]
 
         # child_path gets the missing flowers in parent_2's path
@@ -57,7 +57,6 @@ class Beehive:
         return child
 
     def cross_bees(self):
-
         new_bees = []
         # creates children from the selected bees
         for i in range(len(self.bees) - 1):
@@ -95,27 +94,44 @@ class Beehive:
         """Calculates the average distance of all bees in the hive"""
         group_distance = sum(bee.distance for bee in self.bees)
         medium_distance = round(group_distance / len(self.bees), 2)
-        # print(f"Distance moyenne : {medium_distance}")
+        # print(f"Average distance: {medium_distance}")
         return medium_distance
 
-
-
 def genetic_algorithm(CYCLE_NUMBER, MUTATION_RATE):
-
     beehive = Beehive(POPULATION_SIZE, MUTATION_RATE)
 
-    for generation in range(CYCLE_NUMBER):
-        print(f"--- Génération {generation + 1} ---")
+    # Stores distances of each generation
+    average_distances = []
+    best_distances = []
 
-        beehive.select_bees()
-        print(f"Meilleure distance après sélection : {beehive.bees[0].distance}")
-
-        beehive.average_distance()
-        beehive.cross_bees()
-
-
+    # Initialization of values for the first generation
+    average_distance = beehive.average_distance()
     best_bee = beehive.bees[0]
-    print(f"Meilleure solution trouvée : {best_bee.path}, Distance : {best_bee.distance}")
-    return best_bee
 
+    # Add these values to their respective lists
+    average_distances.append(average_distance)
+    best_distances.append(best_bee.distance)
 
+    # Loops to generate several generations
+    for cycle in range(CYCLE_NUMBER):
+        print(f"--- Generation {cycle + 1} ---")
+
+        # Selection of the best bees and crossing
+        beehive.select_bees()  # Selection of the best bees
+        beehive.cross_bees()   # Crossing to create a new generation
+
+        # Calculate distances for the new generation
+        average_distance = beehive.average_distance()
+        best_bee = beehive.bees[0]
+
+        # Add the results to the lists
+        average_distances.append(average_distance)
+        best_distances.append(best_bee.distance)
+
+        print(f"Best distance: {best_bee.distance}, Average distance: {average_distance}")
+
+    # Display the best solution found
+    best_bee = beehive.bees[0]
+    print(f"Best solution found: {best_bee.path}, Distance: {best_bee.distance}")
+    
+    return best_bee, average_distances, best_distances
