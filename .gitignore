@@ -9,6 +9,7 @@ data/
 
 # Brouillon
 brouillons/
+brouillon.py
 
 # C extensions
 *.so
