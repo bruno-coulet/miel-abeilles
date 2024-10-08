@@ -8,8 +8,8 @@ from constants import (
     INTERLIGNE,
 )
 import matplotlib.pyplot as plt
-from bee_path import bee_best_path
-from bee_performance import bee_performance
+from gui_path import bee_best_path
+from gui_performance import gui_performance
 
 
 def main():
@@ -32,7 +32,7 @@ def main():
         "Would you like to see the graph of the best distances and best bees for each generation ? (yes/no) : "
     )
     if GUI_performance in ["yes", "Yes", "YES"]:
-        bee_performance(CYCLE_NUMBER, average_distances, best_distances)
+        gui_performance(CYCLE_NUMBER, average_distances, best_distances)
 
     print()
     print(INTERLIGNE)

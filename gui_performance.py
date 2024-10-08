@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-def bee_performance(cycle_number, average_distances, best_distances):
+def gui_performance(cycle_number, average_distances, best_distances):
     """
     Plot the performance of the bees.
 
