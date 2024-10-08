@@ -1,5 +1,12 @@
 import random, math
-from constants import FLOWERS, POPULATION_SIZE, SELECTION_RATE, SELECTED_BEES, MUTATION_RATE
+from constants import (
+    FLOWERS,
+    POPULATION_SIZE,
+    SELECTION_RATE,
+    SELECTED_BEES,
+    MUTATION_RATE,
+)
+
 
 class Bee:
     def __init__(self, bee_distance=0, bee_path=[]):
@@ -24,6 +31,7 @@ class Bee:
         total_distance += self.distance_a_to_b(current_position, hive)
         self.distance = round(total_distance, 2)
 
+
 class Beehive:
     def __init__(self, population_size, MUTATION_RATE):
         self.population_size = population_size
@@ -36,9 +44,9 @@ class Beehive:
 
     def select_bees(self) -> None:
         """Sorts bees according to their distance
-           Selects the top of the list according to the SELECTION_RATE"""
+        Selects the top of the list according to the SELECTION_RATE"""
         self.bees.sort(key=lambda bee: bee.distance)
-        self.bees = self.bees[:int(SELECTED_BEES)]
+        self.bees = self.bees[: int(SELECTED_BEES)]
 
     def mix_paths(self, parent_1, parent_2) -> list[int, int]:
         """Mixes the paths of the selected bees"""
@@ -63,11 +71,11 @@ class Beehive:
             parent_1 = self.bees[i]
             parent_2 = self.bees[i + 1]
             child = self.mix_paths(parent_1, parent_2)
-            
+
             # Random mutation
             if random.random() < self.mutation_rate:
                 self.mutate_swap(child)
-            
+
             new_bees.append(child)
 
         # creates more children to reach the quotas
@@ -75,7 +83,7 @@ class Beehive:
             parent_1 = random.choice(self.bees)
             parent_2 = random.choice(self.bees)
             child = self.mix_paths(parent_1, parent_2)
-            
+
             # Random mutation
             if random.random() < self.mutation_rate:
                 self.mutate_swap(child)
@@ -96,6 +104,7 @@ class Beehive:
         medium_distance = round(group_distance / len(self.bees), 2)
         # print(f"Average distance: {medium_distance}")
         return medium_distance
+
 
 def genetic_algorithm(CYCLE_NUMBER, MUTATION_RATE):
     beehive = Beehive(POPULATION_SIZE, MUTATION_RATE)
@@ -118,7 +127,7 @@ def genetic_algorithm(CYCLE_NUMBER, MUTATION_RATE):
 
         # Selection of the best bees and crossing
         beehive.select_bees()  # Selection of the best bees
-        beehive.cross_bees()   # Crossing to create a new generation
+        beehive.cross_bees()  # Crossing to create a new generation
 
         # Calculate distances for the new generation
         average_distance = beehive.average_distance()
@@ -128,10 +137,12 @@ def genetic_algorithm(CYCLE_NUMBER, MUTATION_RATE):
         average_distances.append(average_distance)
         best_distances.append(best_bee.distance)
 
-        print(f"Best distance: {best_bee.distance}, Average distance: {average_distance}")
+        print(
+            f"Best distance: {best_bee.distance}, Average distance: {average_distance}"
+        )
 
     # Display the best solution found
     best_bee = beehive.bees[0]
     print(f"Best solution found: {best_bee.path}, Distance: {best_bee.distance}")
-    
+
     return best_bee, average_distances, best_distances
